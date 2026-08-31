@@ -494,24 +494,6 @@
 
     <div class="nav-note"><b>Fuente de datos:</b> Google Sheets — hojas por propiedad (Estación 1 a 3). Vea la nota sobre actualización arriba de la tabla.</div>
 
-    <div class="user-chip">
-      <div class="user-chip-label">
-        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-        Responsable de este acceso
-      </div>
-      <div class="user-select-row">
-        <div class="user-avatar" id="userAvatar">?</div>
-        <select id="userSelect" class="user-select">
-          <option value="">Seleccione su nombre…</option>
-          <option value="Roddy Velez|Jefe de Monitoreo">Roddy Velez — Jefe de Monitoreo</option>
-          <option value="Bryan Mendoza|Encargado">Bryan Mendoza — Encargado</option>
-          <option value="Josue Gonzalez|Encargado">Josue Gonzalez — Encargado</option>
-          <option value="Janis Gutierrez|Encargada">Janis Gutierrez — Encargada</option>
-        </select>
-      </div>
-      <div class="user-role unset" id="userStatus"><span class="dot-warn"></span>Sin verificar en esta apertura</div>
-    </div>
-
     <div class="theme-switch">
       <div class="user-chip-label">
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
@@ -1394,31 +1376,7 @@
   els.updatedLabel.textContent = "actualizado 30/08/2026";
   els.footerNote.textContent = "Panel TeleArseg generado desde la matriz real de Google Sheets · " + DATA.length + " incidentes en " + estaciones.length + " estaciones";
 
-  // Responsable de este acceso: se debe volver a elegir cada vez que se abre el panel
-  // (no se guarda entre sesiones a propósito).
-  var userSelect = document.getElementById("userSelect");
-  var userAvatar = document.getElementById("userAvatar");
-  var userStatus = document.getElementById("userStatus");
-  function initials(name){
-    return name.split(" ").map(function(p){ return p.charAt(0); }).join("").slice(0,2).toUpperCase();
-  }
   function pad2(n){ return (n<10?"0":"")+n; }
-  userSelect.addEventListener("change", function(){
-    var v = userSelect.value;
-    if (!v){
-      userAvatar.textContent = "?";
-      userStatus.className = "user-role unset";
-      userStatus.innerHTML = '<span class="dot-warn"></span>Sin verificar en esta apertura';
-      return;
-    }
-    var parts = v.split("|");
-    var nombre = parts[0], rol = parts[1];
-    var now = new Date();
-    var hora = pad2(now.getHours()) + ":" + pad2(now.getMinutes());
-    userAvatar.textContent = initials(nombre);
-    userStatus.className = "user-role";
-    userStatus.innerHTML = '<span class="dot-live"></span>' + rol + ' · verificado ' + hora;
-  });
 
   // =========================================================
   // Navegacion entre vistas
